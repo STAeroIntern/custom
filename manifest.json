@@ -2,10 +2,10 @@
   "name": "Base64 Image Viewer",
   "description": "Displays base64 images as clickable thumbnails",
   "resources": {
-    "js": ["https://raw.githubusercontent.com/STAeroIntern/custom/main/custom.js"],  // Correct link to the JavaScript file
+    "js": ["https://raw.githubusercontent.com/STAeroIntern/custom/main/custom.js"],
     "css": []
   },
-  "icon": "https://example.com/icon.png",  // Optional icon for the visualization
+  "icon": "https://example.com/icon.png",
   "type": "visualization",
   "id": "base64-image-viewer"
 }
