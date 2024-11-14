@@ -1,0 +1,11 @@
+{
+    "name": "Base64 Image Viewer",
+    "description": "Displays base64 images as clickable thumbnails",
+    "resources": {
+      "js": ["custom.js"],  // Link to the JavaScript file
+      "css": []
+    },
+    "icon": "https://example.com/icon.png",  // Optional icon for the visualization
+    "type": "visualization",
+    "id": "base64-image-viewer"
+  }
