@@ -1,40 +1,39 @@
-const dscc = require('@google/dscc'); // Import the Data Studio Component Connector library
+const dscc = require('@google/dscc');
 
-// Function to render the visualization
-function drawVisualization(data) {
-  // Clear the visualization container
-  const container = document.createElement('div');
-  container.style.display = 'grid';
-  container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(150px, 1fr))';
-  container.style.gap = '10px';
-  container.style.padding = '10px';
+// Function to draw the visualization
+function drawViz(data, style) {
+  // Select the container element
+  const container = document.getElementById('viz-container');
+  container.innerHTML = ''; // Clear previous content
 
-  // Loop through the data rows
-  data.tables.DEFAULT.forEach(row => {
-    const imageSrc = row['scatter_plot'][0]; // The 4th column containing the base64 image source
+  // Set background color from style settings
+  container.style.backgroundColor = style.backgroundColor || '#ffffff';
 
-    // Create an image element
-    const imgElement = document.createElement('img');
-    imgElement.src = imageSrc;
-    imgElement.alt = 'Scatter Plot';
-    imgElement.style.width = '150px'; // Thumbnail width
-    imgElement.style.border = '1px solid #ccc';
-    imgElement.style.cursor = 'pointer';
+  // Render Base64 images
+  const size = style.imageSize || 100; // Image size from style settings
+  data.tables.default.forEach(row => {
+    const base64String = row.image_base64; // Assuming the 4th column is named `image_base64`
 
-    // Make the image clickable
-    const link = document.createElement('a');
-    link.href = imageSrc; // Set href to the base64 image
-    link.target = '_blank'; // Open image in a new tab
-    link.appendChild(imgElement);
-
-    // Append the clickable image to the container
-    container.appendChild(link);
+    // Validate that the Base64 string starts with the "data:image/png;base64," prefix
+    if (base64String.startsWith('data:image/')) {
+      const imgElement = document.createElement('img');
+      imgElement.src = base64String; // Directly use the Base64 string as the image source
+      imgElement.style.width = `${size}px`;
+      imgElement.style.height = `${size}px`;
+      imgElement.style.margin = '10px';
+      container.appendChild(imgElement);
+    } else {
+      // If the string is not a valid Base64 image, render a placeholder
+      const placeholder = document.createElement('div');
+      placeholder.textContent = 'Invalid image data';
+      placeholder.style.color = 'red';
+      placeholder.style.margin = '10px';
+      container.appendChild(placeholder);
+    }
   });
-
-  // Append the container to the body
-  document.body.innerHTML = ''; // Clear previous content
-  document.body.appendChild(container);
 }
 
-// Listen for data updates and render the visualization
-dscc.subscribeToData(drawVisualization);
+// Subscribe to data and listen for changes
+dscc.subscribeToData(data => {
+  drawViz(data, dscc.getSettings());
+});
