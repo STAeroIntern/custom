@@ -1,11 +1,28 @@
 {
-  "name": "Base64 Image Viewer",
-  "description": "Displays base64 images as clickable thumbnails",
-  "resources": {
-    "js": ["https://raw.githubusercontent.com/STAeroIntern/custom/main/custom.js"],
-    "css": []
+  "data": {
+    "description": "Base64 image renderer",
+    "tables": [
+      {
+        "name": "default",
+        "columns": [
+          { "name": "image_base64", "type": "DIMENSION" }
+        ]
+      }
+    ]
   },
-  "icon": "https://example.com/icon.png",
-  "type": "visualization",
-  "id": "base64-image-viewer"
+  "style": {
+    "backgroundColor": {
+      "type": "COLOR",
+      "label": "Background Color",
+      "defaultValue": "#ffffff"
+    },
+    "imageSize": {
+      "type": "NUMBER",
+      "label": "Image Size (px)",
+      "defaultValue": 100,
+      "minValue": 10,
+      "maxValue": 500
+    }
+  },
+  "script": "script.js"
 }
