@@ -24,5 +24,5 @@
       "maxValue": 500
     }
   },
-  "script": "script.js"
+  "script": "custom.js"
 }
